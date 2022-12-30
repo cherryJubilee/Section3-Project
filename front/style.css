@@ -1,0 +1,10 @@
+body {
+    background-color: #FFCCCC;
+}
+
+.box--qna--answer{
+    border: 1px black solid;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
