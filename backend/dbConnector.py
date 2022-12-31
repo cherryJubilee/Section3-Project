@@ -28,6 +28,9 @@ def createTable():
             answer03 INT NOT NULL,
             answer04 INT NOT NULL,
             answer05 INT NOT NULL,
+            answer06 INT NOT NULL,
+            answer07 INT NOT NULL,
+            answer08 INT NOT NULL,
             answer_mbti INT NOT NULL
             );
         """
@@ -41,26 +44,14 @@ def createTable():
 def insertData(answer):
     cur = conn.cursor()
     mbti_dict = {
-        "ESFP": "0",
-        "ESFJ": "1",
-        "ESTP": "2",
-        "ESTJ": "3",
-        "ENFP": "4",
-        "ENFJ": "5",
-        "ENTP": "6",
-        "ENTJ": "7",
-        "ISFP": "8",
-        "ISFJ": "9",
-        "ISTP": "10",
-        "ISTJ": "11",
-        "INFP": "12",
-        "INFJ": "13",
-        "INTP": "14",
-        "INTJ": "15"
+        "E_F_": "0",
+        "E_T_": "1",
+        "I_F_": "2",
+        "I_T_": "3",
     }
     cur.execute(f"""
-        INSERT INTO {RDS_TABLE} (answer01, answer02, answer03, answer04, answer05, answer_mbti)
-        VALUES ('{answer[0]}', '{answer[1]}', '{answer[2]}', '{answer[3]}', '{answer[4]}', '{mbti_dict[answer[5]]}') 
+        INSERT INTO {RDS_TABLE} (answer01, answer02, answer03, answer04, answer05, answer06, answer07, answer08, answer_mbti)
+        VALUES ('{answer[0]}', '{answer[1]}', '{answer[2]}', '{answer[3]}', '{answer[4]}', '{answer[5]}','{answer[6]}','{answer[7]}','{mbti_dict[answer[8]]}') 
     """)
     conn.commit()
 

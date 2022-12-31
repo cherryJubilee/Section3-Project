@@ -15,10 +15,14 @@ def main():
 @app.route('/survey/<data>', methods=['GET', 'POST'])
 def submit_survey(data):
     answer = []
-    for i in data[:5]:
-        answer.append(i)
-    answer.append(data[5:])
-    dbConnector.insertData(answer)
+    for i in data[:8]:
+        if i in ["1", "2", "3", "4", "5"]:
+            answer.append(i)
+    answer.append(data[8:])
+    try:
+        dbConnector.insertData(answer)
+    except Exception as e:
+        print(f'INSERT FAIL: {e}')
     return answer
 
 
