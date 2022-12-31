@@ -15,8 +15,9 @@ def main():
 @app.route('/survey/<data>', methods=['GET', 'POST'])
 def submit_survey(data):
     answer = []
-    for i in data:
+    for i in data[:5]:
         answer.append(i)
+    answer.append(data[5:])
     dbConnector.insertData(answer)
     return answer
 

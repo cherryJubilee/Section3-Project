@@ -27,7 +27,8 @@ def createTable():
             answer02 INT NOT NULL,
             answer03 INT NOT NULL,
             answer04 INT NOT NULL,
-            answer05 INT NOT NULL
+            answer05 INT NOT NULL,
+            answer_mbti INT NOT NULL
             );
         """
     try:  # 테이블이 없으때만 실행
@@ -36,20 +37,30 @@ def createTable():
         print('Table Already Exist')
 
 
-# ------------INSERT QUERY----------
-def insertHuman(name, contact, resume, blog):
-    cur = conn.cursor()
-    cur.execute(f"INSERT INTO {RDS_TABLE} (name,contact,resume,blog) VALUES (%s,%s,%s,%s)",
-                (name, contact, resume, blog))
-    conn.commit()
-
-
 # -----------RDS INSERT FUNCTION---------
 def insertData(answer):
     cur = conn.cursor()
+    mbti_dict = {
+        "ESFP": "0",
+        "ESFJ": "1",
+        "ESTP": "2",
+        "ESTJ": "3",
+        "ENFP": "4",
+        "ENFJ": "5",
+        "ENTP": "6",
+        "ENTJ": "7",
+        "ISFP": "8",
+        "ISFJ": "9",
+        "ISTP": "10",
+        "ISTJ": "11",
+        "INFP": "12",
+        "INFJ": "13",
+        "INTP": "14",
+        "INTJ": "15"
+    }
     cur.execute(f"""
-        INSERT INTO {RDS_TABLE} (answer01, answer02, answer03, answer04, answer05)
-        VALUES ('{answer[0]}', '{answer[1]}', '{answer[2]}', '{answer[3]}', '{answer[4]}') 
+        INSERT INTO {RDS_TABLE} (answer01, answer02, answer03, answer04, answer05, answer_mbti)
+        VALUES ('{answer[0]}', '{answer[1]}', '{answer[2]}', '{answer[3]}', '{answer[4]}', '{mbti_dict[answer[5]]}') 
     """)
     conn.commit()
 
