@@ -16,7 +16,7 @@ def main():
 def submit_survey(data):
     answer = []
     for i in data:
-        answer.append(int(i))
+        answer.append(i)
     dbConnector.insertData(answer)
     return answer
 
