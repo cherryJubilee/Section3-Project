@@ -14,12 +14,24 @@ services:
       - db
     restart: always
     links:
-        - db:db
+      - db:db
     networks:
       - section3-net
     volumes:
       - ./temp:/usr/src/app/temp
  
+  metabase:
+    container_name: metabase
+    image: metabase/metabase:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./metabase-data:/metabase-data
+    networks:
+      - section3-net
+    links:
+      - db:db
+
   db:
     container_name: db
     image: mysql:latest
@@ -30,3 +42,7 @@ services:
       MYSQL_DATABASE: survey_proj
     networks:
       - section3-net
+    volumes:
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
