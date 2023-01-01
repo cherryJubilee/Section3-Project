@@ -1,8 +1,10 @@
-from flask import Flask, request
+from flask import Flask, request, redirect
 import dbConnector
 import pickle
 
 app = Flask(__name__)
+
+url = "http://hyewon-section3.s3-website.ap-northeast-2.amazonaws.com"
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -40,7 +42,17 @@ def submit_survey(data):
         print(f'mbti: {mbti}')
     except Exception as e:
         print(f'PREDICT FAIL: {e}')
-    return answer
+
+    if mbti is 0:
+        return redirect(f"{url}/0.html", code=302)
+    elif mbti is 1:
+        return redirect(f"{url}/1.html", code=302)
+    elif mbti is 2:
+        return redirect(f"{url}/2.html", code=302)
+    elif mbti is 3:
+        return redirect(f"{url}/3.html", code=302)
+    else:
+        return redirect(f"{url}/error.html", code=302)
 
 
 if __name__ == "__main__":
