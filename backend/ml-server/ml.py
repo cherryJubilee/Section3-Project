@@ -6,19 +6,24 @@ from scipy.stats import randint
 from category_encoders import OrdinalEncoder
 import pandas as pd
 import pymysql
+import pickle
+from datetime import datetime
+import warnings
+warnings.filterwarnings("ignore")
 
+print(f'LOGGING|Connect SQL Server: {datetime.now()}', end='|')
 conn = pymysql.connect(
-    host='localhost',
+    host='db',
     port=3306,
     user='root',
     password='12345678',
     db='survey_proj'
 )
-
+print('success')
+print(f'LOGGING|Start modeling: {datetime.now()}', end='|')
 full_scan_query = "SELECT * FROM survey"
 
 df = pd.read_sql_query(full_scan_query, conn, index_col=['user_id'])
-print(df)
 conn.close()
 
 target = 'answer_mbti'
@@ -51,14 +56,13 @@ major = y_train.mode()[0]
 y_pred = [major] * len(y_train)
 
 # 최다 클래스의 빈도가 정확도가 됩니다.
-print("training accuracy: ", round(accuracy_score(y_train, y_pred), 2))
-
+# print("training accuracy: ", round(accuracy_score(y_train, y_pred), 2))
 
 # 검증세트 에서도 정확도를 확인해 볼 수 있습니다.
 y_val = val[target]
 y_pred = [major] * len(y_val)
-print("validation accuracy: ", accuracy_score(y_val, y_pred))
-print(classification_report(y_val, y_pred))
+# print("validation accuracy: ", accuracy_score(y_val, y_pred))
+# print(classification_report(y_val, y_pred))
 
 """## 1. RandomForest"""
 
@@ -78,7 +82,6 @@ dists = {'randomforestclassifier__criterion': ['gini', 'entropy', 'log_loss'],
          'randomforestclassifier__max_features': ['sqrt', 'log2', None]
          }
 
-
 # randomized Search CV 진행조건을 설정해준다.
 clf = RandomizedSearchCV(
     pipe,  # 파이프라인으로 학습된 모델
@@ -93,21 +96,20 @@ clf = RandomizedSearchCV(
 # randomized Search CV로 train data 학습 진행
 clf.fit(X_train, y_train)
 
-print('최적 하이퍼파라미터: ', clf.best_params_)
-print('accuracy: ', clf.best_score_)
+# print('최적 하이퍼파라미터: ', clf.best_params_)
+# print('accuracy: ', clf.best_score_)
 
 # 만들어진 모델에서 가장 성능이 좋은 모델을 불러옵니다.
 best_model_rf = clf.best_estimator_
 
 y_pred_train = best_model_rf.predict(X_train)
 y_pred_val = best_model_rf.predict(X_val)
-
-print('훈련 정확도: ', accuracy_score(y_train, y_pred_train))
-print('검증 정확도: ', accuracy_score(y_val, y_pred_val))
-print(classification_report(y_val, y_pred_val))
-
-# 새로운 데이터 한 샘플을 선택해 학습한 모델을 통해 예측해 봅니다
-X_test = [[5, 1, 1, 1, 1, 1, 5, 1]]
-y_pred = best_model_rf.predict(X_test)
-
-print(y_pred)
+print('success')
+# print('LOGGING|훈련 정확도: ', accuracy_score(y_train, y_pred_train))
+# print('LOGGING|검증 정확도: ', accuracy_score(y_val, y_pred_val))
+# print(f'LOGGING | {classification_report(y_val, y_pred_val)}')
+print(f'LOGGING|Save model.pkl: {datetime.now()}', end='|')
+# 모델 저장
+with open('/temp/model.pkl', 'wb') as pickle_file:
+    pickle.dump(best_model_rf, pickle_file)
+print('success')
