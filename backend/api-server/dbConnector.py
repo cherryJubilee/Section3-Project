@@ -1,6 +1,6 @@
 import pymysql
 
-RDS_ENDPOINT = '127.0.0.1'
+RDS_ENDPOINT = 'db'
 RDS_PORT = 3306
 RDS_USER = 'root'
 RDS_PASSWORD = '12345678'

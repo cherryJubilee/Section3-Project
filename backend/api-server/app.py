@@ -1,6 +1,5 @@
 from flask import Flask, request
 import dbConnector
-import ml
 
 app = Flask(__name__)
 
