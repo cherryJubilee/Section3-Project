@@ -94,7 +94,7 @@ clf = RandomizedSearchCV(
 )
 
 # randomized Search CV로 train data 학습 진행
-clf.fit(X_train, y_train)
+clf.fit(X_train.values, y_train.values)
 
 # print('최적 하이퍼파라미터: ', clf.best_params_)
 # print('accuracy: ', clf.best_score_)
@@ -102,8 +102,8 @@ clf.fit(X_train, y_train)
 # 만들어진 모델에서 가장 성능이 좋은 모델을 불러옵니다.
 best_model_rf = clf.best_estimator_
 
-y_pred_train = best_model_rf.predict(X_train)
-y_pred_val = best_model_rf.predict(X_val)
+y_pred_train = best_model_rf.predict(X_train.values)
+y_pred_val = best_model_rf.predict(X_val.values)
 print('success')
 # print('LOGGING|훈련 정확도: ', accuracy_score(y_train, y_pred_train))
 # print('LOGGING|검증 정확도: ', accuracy_score(y_val, y_pred_val))
