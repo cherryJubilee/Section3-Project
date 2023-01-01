@@ -1,0 +1,5 @@
+category_encoders
+pandas
+scikit-learn
+scipy
+pymysql
