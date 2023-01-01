@@ -28,13 +28,11 @@ def submit_survey(data):
         if i in ["1", "2", "3", "4", "5"]:  # answer선택지 검증 (1 ~ 5)
             answer.append(i)
     answer.append(data[8:])
-    print('1111')
     # try SQL Insert
     try:
         dbConnector.insertData(answer)
     except Exception as e:
         print(f'INSERT FAIL: {e}')
-    print('2222')
 
     # MBTI 예측
     try:

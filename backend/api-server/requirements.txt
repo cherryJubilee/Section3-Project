@@ -1,3 +1,6 @@
 pymysql
 flask
 cryptography
+sklearn
+scipy
+category_encoders
