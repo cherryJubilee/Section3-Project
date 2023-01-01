@@ -35,6 +35,7 @@ def submit_survey(data):
     except Exception as e:
         print(f'INSERT FAIL: {e}')
     print('2222')
+
     # MBTI 예측
     try:
         mbti = predict_mbti(data[:8])
