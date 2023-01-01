@@ -8,22 +8,24 @@ import pandas as pd
 import pymysql
 
 conn = pymysql.connect(
-    host='db',
+    host='localhost',
     port=3306,
     user='root',
     password='12345678',
     db='survey_proj'
 )
 
-full_scan_query = "SELECT * FROM survej_proj"
+full_scan_query = "SELECT * FROM survey"
 
-df = pd.read_sql_query(full_scan_query, conn, index_col=0)
+df = pd.read_sql_query(full_scan_query, conn, index_col=['user_id'])
+print(df)
 conn.close()
 
 target = 'answer_mbti'
 features = df.drop(columns=target).columns
 train, val = train_test_split(
-    df, train_size=0.80, test_size=0.20, stratify=df[target], random_state=2)
+    df, train_size=0.80, test_size=0.20, stratify=df[target], random_state=2
+)
 
 X_train = train[features]
 y_train = train[target]
