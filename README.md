@@ -16,13 +16,13 @@ docker-compose up
 
 ## HOW TO RUN MODELING CONTAINER
 ```
-cd backend/temp
+cd backend
 docker run --rm --network api-server_section3-net -v $(pwd)/temp:/temp cherryjubilee/ml-server:1.3
 ```
 - Use crontab for auto model update
 ```
 ubuntu@hyewon-section3:~/temp$ crontab -l
-3 * * * * cd /home/ubuntu/api-server/temp && docker run --rm --network api-server_section3-net -v $(pwd)/temp:/temp cherryjubilee/ml-server:1.3
+3 * * * * cd /home/ubuntu/api-server/ && docker run --rm --network api-server_section3-net -v $(pwd)/temp:/temp cherryjubilee/ml-server:1.3
 ```
 ---
 
