@@ -7,7 +7,7 @@ networks:
 services:
   api-server:
     container_name: api-server
-    image: cherryjubilee/api-server:1.4
+    image: cherryjubilee/api-server:1.11
     ports:
       - "80:8000"
     depends_on:
@@ -31,6 +31,8 @@ services:
       - section3-net
     links:
       - db:db
+    depends_on:
+      - db
 
   db:
     container_name: db

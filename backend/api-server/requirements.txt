@@ -1,6 +1,6 @@
 pymysql
 flask
 cryptography
-sklearn
+scikit-learn
 scipy
 category_encoders

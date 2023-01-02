@@ -9,7 +9,9 @@ body {
 div {
     margin: 25px 10px;
 }
-
+img {
+  height: 400px;
+}
 .box--qna--answer{
     border: 1px black solid;
     padding: 10px;
@@ -37,6 +39,10 @@ div {
     font-size: 18px;
 }
 
+.like {
+  font-size: 20px;
+  font-weight: 700;
+}
 
 
 
@@ -98,3 +104,4 @@ div {
     padding: 0 40px;
   }
 }
+
